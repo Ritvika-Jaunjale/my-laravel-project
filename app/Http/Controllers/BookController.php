@@ -10,7 +10,12 @@ class BookController extends Controller
 {
     public function index()
     {
-        return response()->json(Book::all());
+        $books = Book::all();
+
+        return response()->json([
+            'total_books' => $books->count(),
+            'books' => $books,
+        ]);
     }
 
     public function store(Request $request)
