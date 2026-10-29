@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -8,5 +7,7 @@ use App\Http\Controllers\BookController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::get('/books-count', [BookController::class, 'count']);
 
 Route::apiResource('books', BookController::class);

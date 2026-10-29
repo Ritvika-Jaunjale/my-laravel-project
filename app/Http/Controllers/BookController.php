@@ -55,4 +55,10 @@ class BookController extends Controller
             'message' => 'Book deleted successfully.',
         ]);
     }
+    public function count()
+{
+    return response()->json([
+        'total_books' => Book::count(),
+    ]);
+}
 }
