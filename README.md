@@ -1,58 +1,161 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Book Management Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The **Book Management Website** is a web-based application developed using PHP and Laravel. It allows users to manage their personal book collection, organize reading lists, bookmark favourite books, and monitor their reading progress through an interactive dashboard.
 
-## About Laravel
+## 🌟 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Add Books:** Add new books with title, author, and reading status.
+- **View Books:** Display all books in your personal library.
+- **Edit Books:** Update book details and reading status.
+- **Delete Books:** Remove books from the library.
+- **Search Books:** Search for books by title or author.
+- **Bookmark Books:** Bookmark and unbookmark your favourite books.
+- **Reading Lists:** Filter books into different categories:
+  - All Books
+  - Bookmarked Books
+  - To Read
+  - Currently Reading
+  - Finished Books
+- **Reading Statistics:** View total books, bookmarked books, finished books, and reading progress.
+- **Vintage Library Design:** A warm pastel colour theme with ivory, sage green, dusty rose, antique gold, and brown accents.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Technologies Used
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** PHP, Laravel
+- **Frontend:** HTML, CSS, JavaScript
+- **Database:** SQLite
+- **API:** Laravel REST API
+- **Development Environment:** Visual Studio Code
 
-## Learning Laravel
+## 📂 Project Structure
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```text
+rbu-pp-2026/
+│
+├── app/
+│   ├── Http/Controllers/
+│   │   └── BookController.php
+│   └── Models/
+│       └── Book.php
+│
+├── database/
+│   ├── migrations/
+│   └── database.sqlite
+│
+├── resources/
+│   └── views/
+│       └── welcome.blade.php
+│
+├── routes/
+│   ├── api.php
+│   └── web.php
+│
+├── public/
+├── .env.example
+└── README.md
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## ⚙️ Installation and Setup
 
-## Contributing
+Follow these steps to run the project locally.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Clone the Repository
 
-## Code of Conduct
+```bash
+git clone https://github.com/Ritvika-Jaunjale/my-laravel-project.git
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2. Navigate to the Project Folder
 
-## Security Vulnerabilities
+```bash
+cd my-laravel-project
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Install Dependencies
 
-## License
+```bash
+composer install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 4. Configure the Environment
+
+Create your environment file:
+
+```powershell
+copy .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+### 5. Configure the Database
+
+Open your `.env` file and configure SQLite:
+
+```env
+DB_CONNECTION=sqlite
+```
+
+Make sure the SQLite database file exists at:
+
+```text
+database/database.sqlite
+```
+
+If the file does not exist, create it using PowerShell:
+
+```powershell
+New-Item database/database.sqlite -ItemType File
+```
+
+### 6. Run Database Migrations
+
+```bash
+php artisan migrate
+```
+
+### 7. Start the Laravel Development Server
+
+```bash
+php artisan serve
+```
+
+Open your browser and visit:
+
+**http://127.0.0.1:8000**
+
+## 📖 How to Use
+
+1. Open the website in your browser.
+2. Add books by entering their title, author, and reading status.
+3. View your books in the library table.
+4. Use the search bar to find specific books.
+5. Bookmark your favourite books.
+6. Edit or delete book records when required.
+7. Use reading filters to organize your collection.
+8. Track your reading progress through the statistics dashboard.
+
+## 🎨 Website Design
+
+The website uses a pastel vintage-library theme designed to provide a comfortable and visually appealing reading experience.
+
+**Colour Palette:**
+
+- Warm Ivory
+- Cream
+- Sage Green
+- Dusty Rose
+- Antique Gold
+- Walnut Brown
+- Muted Terracotta
+
+## 👩‍💻 Author
+
+**Ritvika Jaunjale**
+
+## 📄 License
+
+This project is developed as an educational project using the Laravel framework.
