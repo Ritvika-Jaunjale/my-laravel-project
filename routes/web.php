@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DrivesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookWebController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +25,5 @@ Route::delete('/drives/{id}', [DrivesController::class, 'destroy']);
 Route::get('/about', function () {
     return view('about');
 });
+
+Route::resource('books', BookWebController::class);

@@ -159,3 +159,18 @@ The website uses a pastel vintage-library theme designed to provide a comfortabl
 ## 📄 License
 
 This project is developed as an educational project using the Laravel framework.
+
+## 🤖 AI Usage
+
+I used ChatGPT as an AI learning assistant during the development
+of this project.
+
+ChatGPT helped me with:
+- Understanding Laravel project structure and MVC concepts.
+- Explaining migrations, models, controllers and API routes.
+- Understanding CRUD operations for managing books.
+- Improving the website's CSS and user interface.
+- Understanding Git commands, commits and GitHub.
+- Preparing project documentation and the README file.
+
+I reviewed and tested the generated code while developing the project.
