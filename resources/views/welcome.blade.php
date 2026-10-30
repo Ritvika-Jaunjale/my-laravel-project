@@ -4,91 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Management System</title>
+    <title>My Book Library</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f6f9;
-            color: #263238;
-        }
-
-        header {
-            background: #243b55;
-            color: white;
-            padding: 22px 30px;
-        }
-
-        header h1 {
             margin: 0;
-            font-size: 25px;
+            padding: 30px;
         }
 
-        header p {
-            margin-bottom: 0;
-            color: #dce6f1;
-        }
-
-        main {
+        .container {
             max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .summary, .table-card {
+            margin: auto;
             background: white;
-            padding: 24px;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px #00000012;
-            margin-bottom: 25px;
         }
 
-        .summary h2 {
+        h1, h2 { color: #333; }
+
+        .count-box {
+            background: #e8f0fe;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #d5dce5;
+        }
+
+        .stat-card h3 {
             margin-top: 0;
-            font-size: 18px;
-            color: #536579;
+            color: #444;
         }
 
-        .count {
-            font-size: 36px;
+        .percentage {
+            font-size: 26px;
             font-weight: bold;
-            color: #243b55;
+            color: #198754;
         }
 
-        .table-card h2 {
-            margin-top: 0;
-        }
-
-        label {
-            display: block;
-            margin-top: 12px;
-            font-weight: bold;
-        }
-
-        input {
+        progress {
             width: 100%;
-            padding: 12px;
-            margin-top: 8px;
+            height: 14px;
+            accent-color: #198754;
+        }
+
+        input, select {
+            padding: 10px;
+            margin: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
 
         button {
-            background: #243b55;
-            color: white;
-            padding: 12px 22px;
+            padding: 9px 13px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            color: white;
+            background: #198754;
+            margin: 3px;
         }
 
-        button:hover {
-            background: #365779;
+        .edit-btn { background: #0d6efd; }
+        .delete-btn { background: #dc3545; }
+        .bookmark-btn { background: #e0a800; color: #222; }
+
+        .filters {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f1f3f5;
+            border-radius: 8px;
+        }
+
+        .filters button { background: #555; }
+
+        .search-box {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 10px;
         }
 
         table {
@@ -98,240 +105,487 @@
         }
 
         th, td {
-            padding: 14px;
-            border-bottom: 1px solid #e5e7eb;
+            border: 1px solid #ddd;
+            padding: 12px;
             text-align: left;
         }
 
         th {
-            background: #edf2f7;
+            background: #333;
+            color: white;
         }
 
-        .empty {
-            text-align: center;
-            color: #68778a;
-            padding: 30px;
-        }
-
-        #message {
-            font-weight: bold;
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #68778a;
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 12px; }
+            table { font-size: 12px; }
+            th, td { padding: 7px; }
         }
     </style>
 </head>
 
 <body>
+<div class="container">
 
-    <header>
-        <h1>Book Management System</h1>
-        <p>Manage your books in one place</p>
-    </header>
+    <h1>My Book Library</h1>
 
-    <main>
+    <!-- Reading Statistics -->
+    <div class="count-box">
+        <h2>My Reading Statistics</h2>
 
-        <!-- Total Books -->
-        <section class="summary">
-            <h2>Total Books</h2>
-            <div class="count" id="totalBooks">Loading...</div>
-        </section>
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Books</h3>
+                <div class="percentage" id="totalBooks">0</div>
+            </div>
 
-        <!-- Add New Book Form -->
-        <section class="table-card">
-            <h2>Add New Book</h2>
+            <div class="stat-card">
+                <h3>Bookmarked Books</h3>
+                <div class="percentage" id="totalBookmarks">0</div>
+            </div>
 
-            <form id="bookForm">
+            <div class="stat-card">
+                <h3>Finished Books</h3>
+                <div class="percentage" id="totalFinished">0</div>
+            </div>
+        </div>
 
-                <label for="title">Book Title</label>
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="Enter book title"
-                    required
-                >
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Reading Completion</h3>
+                <div class="percentage">
+                    <span id="readingPercentage">0</span>%
+                </div>
+                <progress id="readingProgress" value="0" max="100"></progress>
+                <p>Percentage of books you have finished.</p>
+            </div>
 
-                <label for="author">Author Name</label>
-                <input
-                    type="text"
-                    id="author"
-                    placeholder="Enter author name"
-                    required
-                >
+            <div class="stat-card">
+                <h3>Liked Books Percentage</h3>
+                <div class="percentage">
+                    <span id="likedPercentage">0</span>%
+                </div>
+                <progress id="likedProgress" value="0" max="100"></progress>
+                <p>Percentage of books you have bookmarked.</p>
+            </div>
+        </div>
+    </div>
 
-                <br><br>
+    <h2>Add New Book</h2>
 
-                <button type="submit">Add Book</button>
+    <form id="bookForm">
+        <input type="text" id="title" placeholder="Enter Book Title" required>
+        <input type="text" id="author" placeholder="Enter Author Name" required>
 
-                <p id="message"></p>
+        <select id="status">
+            <option value="to_read">To Read</option>
+            <option value="reading">Currently Reading</option>
+            <option value="finished">Finished</option>
+        </select>
 
-            </form>
-        </section>
+        <button type="submit">Add Book</button>
+    </form>
 
-        <!-- All Books Table -->
-        <section class="table-card">
-            <h2>All Books</h2>
+    <h2>Search Books</h2>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Book Title</th>
-                        <th>Author</th>
-                    </tr>
-                </thead>
+    <input
+        type="text"
+        id="searchInput"
+        class="search-box"
+        placeholder="Search by book title or author..."
+    >
 
-                <tbody id="booksTable">
-                    <tr>
-                        <td colspan="3" class="empty">
-                            Loading books...
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+    <div class="filters">
+        <h3>My Reading Lists</h3>
 
-    </main>
+        <button onclick="setFilter('all')">All Books</button>
+        <button onclick="setFilter('bookmarked')">★ Bookmarked</button>
+        <button onclick="setFilter('to_read')">To Read</button>
+        <button onclick="setFilter('reading')">Currently Reading</button>
+        <button onclick="setFilter('finished')">Finished / History</button>
+    </div>
 
-    <footer>
-        Book Management System | Laravel Project
-    </footer>
+    <h2 id="listHeading">All Books</h2>
 
-    <script>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Bookmark</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
-        // Display all books
-        async function loadBooks() {
+        <tbody id="bookTable">
+            <tr>
+                <td colspan="6">Loading books...</td>
+            </tr>
+        </tbody>
+    </table>
 
-            const totalElement = document.getElementById('totalBooks');
-            const tableElement = document.getElementById('booksTable');
+</div>
 
-            try {
+<script>
+    let allBooks = [];
+    let currentFilter = 'all';
 
-                const response = await fetch('/api/books');
+    // Generate a unique display ID using the database ID
+    function generateBookID(id) {
+        return 'ID-A' + String(id).padStart(3, '0');
+    }
 
-                if (!response.ok) {
-                    throw new Error('Unable to load books');
-                }
+    // Load all books
+    async function loadBooks() {
+        const table = document.getElementById('bookTable');
 
-                const data = await response.json();
-                const books = data.books || [];
+        try {
+            const response = await fetch('/api/books');
 
-                totalElement.textContent =
-                    data.total_books ?? books.length;
-
-                tableElement.replaceChildren();
-
-                if (books.length === 0) {
-
-                    const row = document.createElement('tr');
-                    const cell = document.createElement('td');
-
-                    cell.colSpan = 3;
-                    cell.className = 'empty';
-                    cell.textContent =
-                        'No books found. Add books to see them here.';
-
-                    row.appendChild(cell);
-                    tableElement.appendChild(row);
-
-                    return;
-                }
-
-                books.forEach(book => {
-
-                    const row = document.createElement('tr');
-
-                    [book.id, book.title, book.author].forEach(value => {
-
-                        const cell = document.createElement('td');
-                        cell.textContent = value ?? '';
-
-                        row.appendChild(cell);
-
-                    });
-
-                    tableElement.appendChild(row);
-
-                });
-
-            } catch (error) {
-
-                totalElement.textContent = '—';
-
-                const row = document.createElement('tr');
-                const cell = document.createElement('td');
-
-                cell.colSpan = 3;
-                cell.className = 'empty';
-                cell.textContent =
-                    'Could not load books. Check Laravel and the API.';
-
-                row.appendChild(cell);
-                tableElement.replaceChildren(row);
-
+            if (!response.ok) {
+                throw new Error('Unable to load books');
             }
+
+            const data = await response.json();
+            allBooks = data.books || [];
+
+            const total = allBooks.length;
+
+            const finished = allBooks.filter(
+                book => book.status === 'finished'
+            ).length;
+
+            const bookmarked = allBooks.filter(
+                book => book.is_bookmarked === true ||
+                        book.is_bookmarked === 1
+            ).length;
+
+            // Calculate percentages
+            const readingPercent = total === 0
+                ? 0
+                : Math.round((finished / total) * 100);
+
+            const likedPercent = total === 0
+                ? 0
+                : Math.round((bookmarked / total) * 100);
+
+            // Display total counts
+            document.getElementById('totalBooks').textContent = total;
+
+            document.getElementById('totalBookmarks').textContent =
+                bookmarked;
+
+            document.getElementById('totalFinished').textContent =
+                finished;
+
+            // Display percentages
+            document.getElementById('readingPercentage').textContent =
+                readingPercent;
+
+            document.getElementById('readingProgress').value =
+                readingPercent;
+
+            document.getElementById('likedPercentage').textContent =
+                likedPercent;
+
+            document.getElementById('likedProgress').value =
+                likedPercent;
+
+            displayBooks();
+
+        } catch (error) {
+            table.innerHTML =
+                '<tr><td colspan="6">Error loading books.</td></tr>';
+            console.error(error);
+        }
+    }
+
+    // Display books
+    function displayBooks() {
+        const table = document.getElementById('bookTable');
+
+        const search = document.getElementById('searchInput')
+            .value.toLowerCase().trim();
+
+        const filteredBooks = allBooks.filter(book => {
+            const title = (book.title || '').toLowerCase();
+            const author = (book.author || '').toLowerCase();
+
+            const matchesSearch =
+                title.includes(search) || author.includes(search);
+
+            let matchesFilter = true;
+
+            if (currentFilter === 'bookmarked') {
+                matchesFilter =
+                    book.is_bookmarked === true ||
+                    book.is_bookmarked === 1;
+            } else if (currentFilter !== 'all') {
+                matchesFilter = book.status === currentFilter;
+            }
+
+            return matchesSearch && matchesFilter;
+        });
+
+        table.innerHTML = '';
+
+        if (filteredBooks.length === 0) {
+            table.innerHTML =
+                '<tr><td colspan="6">No books found.</td></tr>';
+            return;
         }
 
+        filteredBooks.forEach(book => {
+            const row = document.createElement('tr');
 
-        // Add a new book
-        document.getElementById('bookForm').addEventListener('submit', async function(event) {
+            const uniqueID = generateBookID(book.id);
 
+            const values = [
+                uniqueID,
+                book.title,
+                book.author,
+                {
+                    to_read: 'To Read',
+                    reading: 'Currently Reading',
+                    finished: 'Finished'
+                }[book.status] || 'To Read'
+            ];
+
+            values.forEach(value => {
+                const cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            // Bookmark
+            const bookmarkCell = document.createElement('td');
+            const bookmarkButton = document.createElement('button');
+
+            const isBookmarked =
+                book.is_bookmarked === true ||
+                book.is_bookmarked === 1;
+
+            bookmarkButton.textContent = isBookmarked
+                ? '★ Saved'
+                : '☆ Bookmark';
+
+            bookmarkButton.className = 'bookmark-btn';
+            bookmarkButton.onclick = () => toggleBookmark(book);
+
+            bookmarkCell.appendChild(bookmarkButton);
+            row.appendChild(bookmarkCell);
+
+            // Edit and Delete
+            const actionCell = document.createElement('td');
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.className = 'edit-btn';
+            editButton.onclick = () => editBook(book);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete-btn';
+            deleteButton.onclick = () => deleteBook(book);
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+
+            row.appendChild(actionCell);
+            table.appendChild(row);
+        });
+    }
+
+    // Search
+    document.getElementById('searchInput').addEventListener(
+        'input',
+        displayBooks
+    );
+
+    // Filter reading lists
+    function setFilter(filter) {
+        currentFilter = filter;
+
+        const headings = {
+            all: 'All Books',
+            bookmarked: 'Bookmarked Books',
+            to_read: 'Books To Read',
+            reading: 'Currently Reading',
+            finished: 'Finished Books / Reading History'
+        };
+
+        document.getElementById('listHeading').textContent =
+            headings[filter];
+
+        displayBooks();
+    }
+
+    // Add book
+    document.getElementById('bookForm').addEventListener(
+        'submit',
+        async function(event) {
             event.preventDefault();
 
-            const title = document.getElementById('title').value;
-            const author = document.getElementById('author').value;
-            const message = document.getElementById('message');
+            const title = document.getElementById('title').value.trim();
+            const author = document.getElementById('author').value.trim();
+            const status = document.getElementById('status').value;
 
             try {
-
                 const response = await fetch('/api/books', {
-
                     method: 'POST',
-
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-
                     body: JSON.stringify({
-                        title: title,
-                        author: author
+                        title,
+                        author,
+                        status,
+                        is_bookmarked: false
                     })
-
                 });
 
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(
-                        data.message || 'Unable to add book'
-                    );
+                    throw new Error(data.message || 'Unable to add book');
                 }
 
-                message.textContent = 'Book added successfully!';
-                message.style.color = 'green';
-
+                alert('Book added successfully!');
                 document.getElementById('bookForm').reset();
 
                 await loadBooks();
 
             } catch (error) {
+                alert(error.message);
+            }
+        }
+    );
 
-                message.textContent = error.message;
-                message.style.color = 'red';
+    // Edit book
+    async function editBook(book) {
+        const newTitle = prompt('Enter book title:', book.title);
+        if (newTitle === null) return;
 
+        const newAuthor = prompt('Enter author name:', book.author);
+        if (newAuthor === null) return;
+
+        const statusMessage =
+            'Enter status:\n' +
+            'to_read = To Read\n' +
+            'reading = Currently Reading\n' +
+            'finished = Finished';
+
+        const newStatus = prompt(
+            statusMessage,
+            book.status || 'to_read'
+        );
+
+        if (newStatus === null) return;
+
+        if (!newTitle.trim() || !newAuthor.trim()) {
+            alert('Title and author cannot be empty.');
+            return;
+        }
+
+        if (!['to_read', 'reading', 'finished'].includes(newStatus.trim())) {
+            alert('Enter to_read, reading, or finished.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/books/' + book.id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: newTitle.trim(),
+                    author: newAuthor.trim(),
+                    status: newStatus.trim()
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to update book');
             }
 
-        });
+            alert('Book updated successfully!');
+            await loadBooks();
 
+        } catch (error) {
+            alert(error.message);
+        }
+    }
 
-        // Load books when the page opens
-        loadBooks();
+    // Bookmark and unbookmark
+    async function toggleBookmark(book) {
+        try {
+            const response = await fetch('/api/books/' + book.id, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    is_bookmarked: !(
+                        book.is_bookmarked === true ||
+                        book.is_bookmarked === 1
+                    )
+                })
+            });
 
-    </script>
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to update bookmark');
+            }
+
+            await loadBooks();
+
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    // Delete book
+    async function deleteBook(book) {
+        const confirmDelete = confirm(
+            'Are you sure you want to delete "' + book.title + '"?'
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch('/api/books/' + book.id, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to delete book');
+            }
+
+            alert('Book deleted successfully!');
+            await loadBooks();
+
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    // Load books when page opens
+    loadBooks();
+</script>
 
 </body>
 </html>
