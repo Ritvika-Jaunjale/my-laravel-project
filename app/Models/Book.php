@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Models;
@@ -10,5 +9,11 @@ class Book extends Model
     protected $fillable = [
         'title',
         'author',
+        'is_bookmarked',
+        'status',
+    ];
+
+    protected $casts = [
+        'is_bookmarked' => 'boolean',
     ];
 }
